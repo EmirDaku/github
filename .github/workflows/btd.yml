@@ -1,0 +1,17 @@
+name: btd
+on: push
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+     - name: checkout repo code
+       uses: actions/checkoutcode@v4
+     - name: install nodejs (use node js)
+       uses: actions/setup-node@v4
+       with:
+         nodeversion: '24'
+      - run: npm install
+      - run: npm run build
+  
+
+    
