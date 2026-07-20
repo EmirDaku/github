@@ -1,6 +1,7 @@
 name: build-test-deploy
 
 on: push
+  
 
 jobs:
   build:
@@ -16,7 +17,6 @@ jobs:
           node-version: '24'
 
       - run: npm install
-
       - run: npm run build
       
   test:
@@ -33,48 +33,48 @@ jobs:
           node-version: '24'
 
       - run: npm install
-
       - run: npm test
 
-   deploy:
+
+  deploy:
     needs: test
 
-  permissions:
-    contents: read
-    pages: write
-    id-token: write
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
 
-  environment:
-    name: production
-    url: ${{ steps.deployment.outputs.page_url }}
+    environment:
+      name: production
+      url: ${{ steps.deployment.outputs.page_url }}
 
-  runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
-  steps:
+    steps:
 
-    - name: checkout repo code
-      uses: actions/checkout@v5
+      - name: checkout repo code
+        uses: actions/checkout@v5
 
-    - name: install nodejs
-      uses: actions/setup-node@v5
-      with:
-        node-version: '24'
+      - name: install nodejs
+        uses: actions/setup-node@v5
+        with:
+          node-version: '24'
 
-    - name: install dependencies
-      run: npm install
+      - name: install dependencies
+        run: npm install
 
-    - name: build application
-      run: npm run build
+      - name: build application
+        run: npm run build
 
-    - name: configure github pages
-      uses: actions/configure-pages@v5
+      - name: configure github pages
+        uses: actions/configure-pages@v5
 
-    - name: upload artifact
-      uses: actions/upload-pages-artifact@v3
-      with:
-        path: './out'
+      - name: upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './out'
 
-    - name: deploy
-      id: deployment
-      uses: actions/deploy-pages@v5
+      - name: deploy
+        id: deployment
+        uses: actions/deploy-pages@v5
 
