@@ -18,5 +18,20 @@ jobs:
       - run: npm install
 
       - run: npm run build
+  test:
+    needs: build
+    runs-on: ubuntu-latest
 
+    steps:
+      - name: checkout repo code
+        uses: actions/checkout@v5
+
+      - name: install nodejs
+        uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+
+      - run: npm install
+
+      - run: npm test
     
